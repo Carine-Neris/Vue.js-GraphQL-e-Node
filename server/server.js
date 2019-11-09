@@ -9,22 +9,29 @@ const typeDefs = `
     }
 
     type Query {
-        prefixes: [Item]
-        sufixes: [Item]
+        items(type: String): [Item]
     }
 `;
 
+const items =[
+	{ id:1, type: "prefix", description:"Air"},
+	{ id:2, type: "prefix", description:"Jet"},
+	{ id:3, type: "prefix", description:"Flight"},
+	{ id:1, type: "sufix", description:"Hub"},
+	{ id:2, type: "sufix", description:"Mart"},
+	{ id:3, type: "sufix", description:"Station"}
+]
+
+
 const resolvers = {
     Query: {
-        prefixes(){
-            return[];
+        items(_,args) {
+            return items.filter(item => item.type === args.type);
         },
-        sufixes(){
-            return[];
-        }
     }
 }
 
 
 const server = new ApolloServer({typeDefs, resolvers});
-console.log(ApolloServer);
+server.listen();
+
